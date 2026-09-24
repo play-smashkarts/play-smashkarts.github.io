@@ -1,56 +1,32 @@
-# VoiceCraft 3D TTS Website
+# VoiceCraft Fast 3D TTS v2.0.1
 
-Static GitHub Pages-ready text-to-speech website.
+A lightweight static TTS website for GitHub Pages.
 
-## Included
+## What changed
+- No network/API request on page load.
+- Natural MP3 voices are lazy-loaded only when the user opens MP3 mode and requests them.
+- The natural voice list is cached in localStorage for 7 days.
+- Changing a voice artist never calls the network.
+- Voice preview is opt-in and only fetches when Preview is clicked.
+- Natural MP3 generation uses ~900-character sentence-safe chunks and up to 8 parallel requests.
+- HTTP 502 and timeout failures get one automatic retry.
+- No service worker, avoiding stale GitHub Pages UI/code caches.
+- Simpler responsive 3D interface with fewer DOM elements and no external fonts/libraries.
 
-- Responsive 3D/glass UI for desktop and mobile
-- Browser/system TTS voice playback through the Web Speech API
-- Voice search
-- Play, pause, resume and stop
-- Speed, pitch and volume controls
-- TXT and Markdown import
-- Natural MP3 voice library and MP3 generation through SpeechSter (`ahm7xmakki.com`)
-- Long-text chunking
-- In-page audio preview and MP3 download
-- Light/dark theme
-- Local preference storage
-- Privacy page
-- PWA manifest and lightweight service worker
+## GitHub Pages
+1. Upload the contents of this folder to the repository root.
+2. Keep `.nojekyll` in the root.
+3. GitHub → Settings → Pages → Deploy from branch → main / root.
+4. Hard refresh once after replacing an older build (Ctrl+F5).
 
-## GitHub Pages upload
+## TTS architecture
+- Listen mode: browser Web Speech API (`speechSynthesis`).
+- MP3 mode: external REST endpoint at `https://ahm7xmakki.com/api/voices` and `/api/tts`.
+- MP3 output is real `audio/mpeg` returned by the provider and merged client-side for long text.
 
-1. Create a new GitHub repository.
-2. Extract this ZIP.
-3. Upload the **contents** of the extracted folder to the repository root. `index.html` must be at the root.
-4. Commit the files.
-5. Open **Settings → Pages**.
-6. Under **Build and deployment**, choose **Deploy from a branch**.
-7. Select your main branch and `/ (root)`, then save.
-8. Open the Pages URL after GitHub publishes the site.
+## Important
+GitHub Pages is static hosting. Natural MP3 availability still depends on the external provider and cross-origin access. Browser Listen mode remains usable if the MP3 service is unavailable.
 
-No Node.js, build command, package manager, or server is required.
 
-## Important MP3 note
-
-Browser speech synthesis does not provide downloadable raw audio in normal Chromium websites. This project therefore uses a separate external TTS endpoint for MP3 generation. The UI asks for user consent before the first MP3 request and the privacy page discloses this behavior.
-
-The current API base is defined at the top of `app.js`:
-
-```js
-const API_BASE = 'https://ahm7xmakki.com';
-```
-
-Review the provider's current terms, privacy policy, availability and CORS behavior before production deployment. If you switch providers, update `app.js`, `privacy.html`, and the consent message.
-
-## Local testing
-
-A service worker does not run from `file://`. For full PWA behavior, serve the folder over HTTP, for example:
-
-```bash
-python -m http.server 8000
-```
-
-Then open `http://localhost:8000`.
-
-Live browser TTS can still be tested in modern Chrome/Edge. MP3 generation requires internet access to the external TTS endpoint.
+## Long text fix (2.0.1)
+Long MP3 jobs are split safely, generated with controlled concurrency/retries, validated as real MP3, and previewed chunk-by-chunk to avoid the browser 0:00 merged-file metadata problem. The downloadable file is rebuilt from cleaned MP3 frames.

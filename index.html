@@ -1,239 +1,116 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1020">
-  <meta name="description" content="VoiceCraft is a fast, responsive text-to-speech web app with browser voices, natural MP3 generation, voice controls, and a modern 3D interface.">
-  <meta name="robots" content="index,follow">
-  <meta property="og:title" content="VoiceCraft — 3D Text to Speech">
-  <meta property="og:description" content="Turn text into speech with browser voices or generate downloadable MP3 audio.">
-  <meta property="og:type" content="website">
-  <title>VoiceCraft — 3D Text to Speech & MP3 Download</title>
+  <meta name="description" content="Fast text to speech with browser voices and downloadable natural MP3 audio.">
+  <title>VoiceCraft — Fast 3D Text to Speech</title>
   <link rel="icon" href="assets/icons/icon32.png" sizes="32x32">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css">
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@graph":[
-      {"@type":"WebApplication","name":"VoiceCraft","applicationCategory":"MultimediaApplication","operatingSystem":"Any modern web browser","description":"A responsive text-to-speech web app with browser voice playback and natural MP3 generation."},
-      {"@type":"FAQPage","mainEntity":[
-        {"@type":"Question","name":"Why are browser voices different on different devices?","acceptedAnswer":{"@type":"Answer","text":"The website uses voices exposed by the browser Web Speech API, so available voices depend on the browser, operating system and installed language packs."}},
-        {"@type":"Question","name":"Why is the download voice separate from the playback voice?","acceptedAnswer":{"@type":"Answer","text":"Browser speech synthesis normally plays audio without exposing a raw audio stream for download, so downloadable MP3 audio uses a separate TTS endpoint."}},
-        {"@type":"Question","name":"Can I host this on GitHub Pages?","acceptedAnswer":{"@type":"Answer","text":"Yes. VoiceCraft is built with static HTML, CSS and JavaScript and can be hosted from a GitHub Pages repository."}}
-      ]}
-    ]
-  }
-  </script>
+  <link rel="stylesheet" href="styles.css?v=2.0.1">
 </head>
 <body>
-  <a class="skip-link" href="#tool">Skip to Text to Speech tool</a>
-
-  <div class="ambient ambient-one" aria-hidden="true"></div>
-  <div class="ambient ambient-two" aria-hidden="true"></div>
-  <div class="grid-floor" aria-hidden="true"></div>
-
-  <header class="site-header shell">
-    <a class="brand" href="#top" aria-label="VoiceCraft home">
-      <span class="brand-icon-wrap"><img src="assets/icons/icon48.png" alt="" width="34" height="34"></span>
-      <span>VoiceCraft</span>
-    </a>
-    <nav class="main-nav" aria-label="Primary navigation">
-      <a href="#tool">Tool</a>
-      <a href="#features">Features</a>
-      <a href="#how">How it works</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle light and dark theme" title="Toggle theme">
-      <span aria-hidden="true">◐</span>
-    </button>
+  <div class="ambient a1"></div><div class="ambient a2"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="VoiceCraft home"><img src="assets/icons/icon48.png" alt="" width="36" height="36"><span><strong>VoiceCraft</strong><small>Fast TTS</small></span></a>
+    <div class="top-actions">
+      <span class="status" id="status"><i></i><span>Ready</span></span>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme">◐</button>
+    </div>
   </header>
 
-  <main id="top">
-    <section class="hero shell">
+  <main class="page">
+    <section class="hero">
       <div class="hero-copy">
-        <span class="eyebrow"><span class="live-dot"></span> Browser TTS + Natural MP3</span>
-        <h1>Turn any text into <span class="gradient-text">natural speech.</span></h1>
-        <p>Listen with voices already available in your browser, or generate a downloadable MP3 with a separate natural voice. No account is required.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#tool">Start speaking <span aria-hidden="true">→</span></a>
-          <a class="button ghost" href="#how">How it works</a>
-        </div>
-        <div class="trust-row" aria-label="Highlights">
-          <span>✓ Responsive</span><span>✓ No login</span><span>✓ MP3 export</span>
-        </div>
+        <span class="eyebrow">FAST • SIMPLE • DOWNLOADABLE</span>
+        <h1>Text to speech without the slow, cluttered UI.</h1>
+        <p>Listen instantly with your browser voices. Open MP3 mode only when you need natural downloadable audio.</p>
       </div>
-      <div class="hero-visual" aria-hidden="true">
-        <div class="orb-stage">
-          <div class="voice-orb">
-            <div class="orb-core">◉</div>
-            <div class="ring ring-one"></div>
-            <div class="ring ring-two"></div>
-            <div class="ring ring-three"></div>
-          </div>
-          <div class="float-chip chip-a">MP3</div>
-          <div class="float-chip chip-b">580+ Voices</div>
-          <div class="float-chip chip-c">1.0×</div>
-        </div>
+      <div class="speed-card" aria-label="Performance improvements">
+        <b>v2.0.1 Long Text Fix</b>
+        <span>0 API calls on page load</span>
+        <span>Voice list cached locally</span>
+        <span>Voice change = no fetch</span>
       </div>
     </section>
 
-    <section class="tool-section shell" id="tool" aria-labelledby="toolTitle">
-      <div class="section-heading">
-        <div><span class="eyebrow">Voice studio</span><h2 id="toolTitle">Text to Speech</h2></div>
-        <div class="status-pill" id="globalStatus" role="status" aria-live="polite"><span class="status-dot"></span><span>Ready</span></div>
+    <section class="app-shell">
+      <div class="mode-tabs" role="tablist" aria-label="TTS mode">
+        <button class="mode-tab active" data-tab="listen" role="tab" aria-selected="true" type="button">▶ Listen</button>
+        <button class="mode-tab" data-tab="mp3" role="tab" aria-selected="false" type="button">↓ MP3 Download</button>
       </div>
 
-      <div class="studio-grid">
-        <article class="panel editor-panel">
-          <div class="panel-topline">
-            <div><span class="step-badge">01</span><strong>Your text</strong></div>
-            <div class="mini-actions">
-              <label class="mini-button file-button" title="Import .txt or .md file">
-                <input id="fileInput" type="file" accept=".txt,.md,text/plain,text/markdown" hidden>
-                Import
-              </label>
-              <button class="mini-button" id="clearText" type="button">Clear</button>
-            </div>
+      <div class="workspace">
+        <section class="editor-card card-3d">
+          <div class="card-head">
+            <div><span class="step">01</span><div><b>Your text</b><small>Paste, type, or import TXT / MD</small></div></div>
+            <div class="editor-actions"><label class="mini-btn" for="fileInput">Import</label><input id="fileInput" type="file" accept=".txt,.md,text/plain,text/markdown" hidden><button class="mini-btn" id="clearBtn" type="button">Clear</button></div>
+          </div>
+          <textarea id="textInput" placeholder="Paste or type text here..." maxlength="250000" spellcheck="true"></textarea>
+          <div class="editor-foot"><span><b id="charCount">0</b> chars</span><span><b id="wordCount">0</b> words</span><span id="langHint">Language: Auto</span></div>
+        </section>
+
+        <aside class="control-card card-3d" id="listenPanel">
+          <div class="card-head compact"><div><span class="step">02</span><div><b>Listen instantly</b><small>No server request</small></div></div><span class="local-pill">Local</span></div>
+          <label class="field"><span>Search voice</span><input id="browserVoiceSearch" type="search" placeholder="Search installed voices..."></label>
+          <label class="field"><span>Voice</span><select id="browserVoice"><option>Loading browser voices…</option></select><small id="browserVoiceMeta">Your device voices appear here.</small></label>
+
+          <div class="control-grid">
+            <label><span>Speed <b id="speedOut">1.00×</b></span><input id="speed" type="range" min="0.5" max="2" step="0.05" value="1"></label>
+            <label><span>Pitch <b id="pitchOut">1.00</b></span><input id="pitch" type="range" min="0" max="2" step="0.05" value="1"></label>
+            <label class="full"><span>Volume <b id="volumeOut">100%</b></span><input id="volume" type="range" min="0" max="1" step="0.05" value="1"></label>
           </div>
 
-          <label class="sr-only" for="textInput">Text to convert to speech</label>
-          <textarea id="textInput" maxlength="120000" placeholder="Paste or type text here..." spellcheck="true"></textarea>
-          <div class="editor-footer">
-            <span><strong id="charCount">0</strong> characters</span>
-            <span><strong id="wordCount">0</strong> words</span>
-            <span id="detectedLang">Language: Auto</span>
+          <div class="transport">
+            <button class="primary play" id="playBtn" type="button">▶ Play</button>
+            <button id="pauseBtn" type="button">Ⅱ Pause</button>
+            <button id="resumeBtn" type="button">↻ Resume</button>
+            <button id="stopBtn" type="button">■ Stop</button>
           </div>
-        </article>
-
-        <aside class="panel controls-panel">
-          <div class="panel-topline"><div><span class="step-badge">02</span><strong>Browser playback</strong></div></div>
-
-          <div class="field">
-            <label for="voiceSearch">Find installed voice</label>
-            <input id="voiceSearch" class="control" type="search" placeholder="Search voice or language..." autocomplete="off">
-          </div>
-          <div class="field">
-            <label for="browserVoice">Browser voice</label>
-            <select id="browserVoice" class="control"><option value="">Loading voices…</option></select>
-            <small id="browserVoiceMeta">Only voices reported by your browser are shown.</small>
-          </div>
-
-          <div class="slider-row">
-            <div class="range-head"><label for="speedRange">Speed</label><output id="speedValue">1.00×</output></div>
-            <input id="speedRange" type="range" min="0.5" max="2" step="0.05" value="1">
-          </div>
-          <div class="slider-row">
-            <div class="range-head"><label for="pitchRange">Pitch</label><output id="pitchValue">1.00</output></div>
-            <input id="pitchRange" type="range" min="0" max="2" step="0.05" value="1">
-          </div>
-          <div class="slider-row">
-            <div class="range-head"><label for="volumeRange">Volume</label><output id="volumeValue">100%</output></div>
-            <input id="volumeRange" type="range" min="0" max="1" step="0.05" value="1">
-          </div>
-
-          <div class="transport" aria-label="Playback controls">
-            <button id="playBtn" class="transport-main" type="button" aria-label="Play speech"><span aria-hidden="true">▶</span><span>Play</span></button>
-            <button id="pauseBtn" class="transport-button" type="button" aria-label="Pause speech" title="Pause"><span aria-hidden="true">Ⅱ</span><span>Pause</span></button>
-            <button id="resumeBtn" class="transport-button" type="button" aria-label="Resume speech" title="Resume"><span aria-hidden="true">↻</span><span>Resume</span></button>
-            <button id="stopBtn" class="transport-button danger-soft" type="button" aria-label="Stop speech" title="Stop"><span aria-hidden="true">■</span><span>Stop</span></button>
-          </div>
-          <div class="progress-track" aria-hidden="true"><span id="speechProgress"></span></div>
-          <p class="helper-text">Live playback uses your browser/system speech voices. Available voices depend on your device.</p>
+          <div class="progress"><span id="speechProgress"></span></div>
+          <button class="switch-cta" id="goMp3" type="button"><span>Need a file?</span><b>Open MP3 Download →</b></button>
         </aside>
 
-        <article class="panel mp3-panel">
-          <div class="panel-topline">
-            <div><span class="step-badge">03</span><strong>Natural MP3</strong></div>
-            <span class="secure-badge">External TTS</span>
+        <aside class="control-card card-3d hidden" id="mp3Panel">
+          <div class="card-head compact"><div><span class="step">02</span><div><b>Natural MP3</b><small>Loads only when you open this mode</small></div></div><span class="cloud-pill">Online</span></div>
+
+          <div id="voiceLoader" class="voice-loader">
+            <div><b>Natural voice library</b><span id="voiceLoaderText">Not loaded yet — keeping the page fast.</span></div>
+            <button class="primary" id="loadVoicesBtn" type="button">Load voices</button>
           </div>
 
-          <div class="mp3-layout">
-            <div class="field grow">
-              <label for="downloadVoiceSearch">Search download voices</label>
-              <input id="downloadVoiceSearch" class="control" type="search" placeholder="Search name, language, country..." autocomplete="off">
+          <div id="naturalControls" hidden>
+            <label class="field"><span>Search voice artist</span><input id="naturalSearch" type="search" placeholder="Name, language, country..."></label>
+            <label class="field"><span>Voice artist</span><select id="naturalVoice"></select><small id="naturalMeta">Select a voice. Changing it does not fetch anything.</small></label>
+            <div class="natural-actions"><button id="previewBtn" type="button">▶ Preview selected voice</button><button id="refreshBtn" type="button">↻ Refresh list</button></div>
+
+            <div class="control-grid compact-grid">
+              <label><span>MP3 speed <b id="mp3SpeedOut">0</b></span><input id="mp3Speed" type="range" min="-100" max="100" step="5" value="0"></label>
+              <label><span>MP3 pitch <b id="mp3PitchOut">0</b></span><input id="mp3Pitch" type="range" min="-100" max="100" step="5" value="0"></label>
             </div>
-            <button id="refreshVoices" class="square-button" type="button" aria-label="Refresh natural voices" title="Refresh voices">↻</button>
-          </div>
-          <div class="field">
-            <label for="downloadVoice">Natural MP3 voice</label>
-            <select id="downloadVoice" class="control"><option value="">Load natural voices to begin</option></select>
-            <small id="downloadVoiceMeta">The voice list loads from the configured TTS provider.</small>
-          </div>
 
-          <div class="mp3-actions">
-            <button id="generateMp3" class="button primary wide" type="button">Generate MP3</button>
-            <button id="downloadMp3" class="button download-button" type="button" disabled>↓ Download MP3</button>
-          </div>
+            <button class="primary generate" id="generateBtn" type="button">Generate MP3</button>
+            <div class="gen-state" id="genState" hidden><div><span id="genText">Generating…</span><b id="genPct">0%</b></div><div class="progress"><span id="genProgress"></span></div></div>
 
-          <div class="generation-progress" id="generationWrap" hidden>
-            <div class="range-head"><span id="generationLabel">Generating audio…</span><span id="generationPercent">0%</span></div>
-            <div class="progress-track active"><span id="generationProgress"></span></div>
-          </div>
-
-          <div class="audio-result" id="audioResult" hidden>
-            <div class="result-icon">♪</div>
-            <div class="result-body">
-              <strong id="resultTitle">Generated speech.mp3</strong>
-              <span id="resultMeta">MP3 audio ready</span>
+            <div class="audio-box" id="audioBox" hidden>
               <audio id="audioPlayer" controls preload="metadata"></audio>
+              <div><span id="audioMeta">MP3 ready</span><button class="download" id="downloadBtn" type="button">↓ Download MP3</button></div>
             </div>
           </div>
-          <p class="privacy-note"><strong>Privacy note:</strong> browser playback stays with your browser/system voice. MP3 generation sends only the text you choose to the external TTS provider. You will be asked before the first MP3 request.</p>
-        </article>
+          <p class="privacy">MP3 mode sends only the text you choose to the external TTS provider. Browser Listen mode stays separate.</p>
+        </aside>
       </div>
     </section>
 
-    <section class="feature-section shell" id="features">
-      <div class="section-heading centered"><div><span class="eyebrow">Built for everyday use</span><h2>A cleaner way to turn text into audio</h2><p>Fast controls, clear separation between local playback and downloadable audio, and a responsive interface.</p></div></div>
-      <div class="feature-grid">
-        <article class="feature-card"><span class="feature-icon">◌</span><h3>Browser voices</h3><p>Automatically lists speech voices exposed by the browser instead of showing fake hard-coded options.</p></article>
-        <article class="feature-card"><span class="feature-icon">MP3</span><h3>Real MP3 output</h3><p>Download audio returned as actual <code>audio/mpeg</code> data rather than renaming another file format.</p></article>
-        <article class="feature-card"><span class="feature-icon">≋</span><h3>Long text support</h3><p>Long scripts are split at sentence and word boundaries, then generated in manageable chunks.</p></article>
-        <article class="feature-card"><span class="feature-icon">◫</span><h3>Import files</h3><p>Open plain text and Markdown files directly in the editor without uploading the source file itself.</p></article>
-        <article class="feature-card"><span class="feature-icon">⌁</span><h3>Fine controls</h3><p>Adjust speed, pitch and volume for browser playback, with speed and pitch passed to MP3 generation.</p></article>
-        <article class="feature-card"><span class="feature-icon">3D</span><h3>Responsive design</h3><p>Soft-depth cards, subtle 3D motion, accessible focus states, and layouts optimized for desktop and mobile.</p></article>
-      </div>
-    </section>
-
-    <section class="how-section shell" id="how">
-      <div class="section-heading centered"><div><span class="eyebrow">Simple workflow</span><h2>Text in. Voice out.</h2></div></div>
-      <div class="steps-grid">
-        <article><span>1</span><h3>Add your text</h3><p>Paste, type, or import a TXT/MD file.</p></article>
-        <article><span>2</span><h3>Choose a voice</h3><p>Use a browser voice for playback or a natural MP3 voice for export.</p></article>
-        <article><span>3</span><h3>Tune the sound</h3><p>Set speed, pitch and volume to your preference.</p></article>
-        <article><span>4</span><h3>Listen or download</h3><p>Play instantly, or generate and save an MP3 file.</p></article>
-      </div>
-    </section>
-
-    <section class="faq-section shell" id="faq">
-      <div class="section-heading centered"><div><span class="eyebrow">Questions</span><h2>Frequently asked questions</h2></div></div>
-      <div class="faq-list">
-        <details><summary>Why are browser voices different on different devices?</summary><p>The website reads the voices exposed by the Web Speech API. Chrome, Edge, Windows, macOS and installed language packs can expose different voice sets.</p></details>
-        <details><summary>Why is the download voice separate from the playback voice?</summary><p>Browser speech synthesis normally plays audio but does not expose the raw audio stream needed to save a real MP3. Downloadable audio therefore uses a separate TTS endpoint that returns MP3 bytes.</p></details>
-        <details><summary>Does the site upload my TXT or Markdown file?</summary><p>No. The file is read in your browser and placed into the editor. If you generate an MP3, the selected text is then sent to the configured TTS provider for synthesis.</p></details>
-        <details><summary>Can I host this on GitHub Pages?</summary><p>Yes. The project is static HTML, CSS and JavaScript, so it can be uploaded directly to a GitHub repository and published with GitHub Pages.</p></details>
-      </div>
+    <section class="mini-info">
+      <article><b>Fast start</b><span>No natural-voice API request until MP3 mode is opened.</span></article>
+      <article><b>Stable voice changes</b><span>Voice artist switching is local after the list is loaded.</span></article>
+      <article><b>Long text</b><span>Long text uses verified MP3 chunks, controlled retries, and a continuous chunk preview.</span></article>
     </section>
   </main>
 
-  <footer class="footer shell">
-    <div class="footer-brand"><img src="assets/icons/icon32.png" alt="" width="28" height="28"><div><strong>VoiceCraft</strong><span>3D Text to Speech</span></div></div>
-    <div class="footer-links"><a href="privacy.html">Privacy</a><a href="README.md">Setup</a><a href="#top">Back to top ↑</a></div>
-  </footer>
-
-  <dialog id="consentDialog" class="consent-dialog">
-    <form method="dialog">
-      <div class="dialog-icon">MP3</div>
-      <h2>Generate natural MP3?</h2>
-      <p>To create downloadable MP3 audio, the text currently in the editor will be sent to the external SpeechSter TTS endpoint at <strong>ahm7xmakki.com</strong>. Browser playback does not use this MP3 endpoint.</p>
-      <label class="check-row"><input id="rememberConsent" type="checkbox"> <span>Remember my choice on this device</span></label>
-      <div class="dialog-actions"><button value="cancel" class="button ghost" type="submit">Cancel</button><button id="consentContinue" value="default" class="button primary" type="submit">Continue</button></div>
-    </form>
-  </dialog>
-
+  <footer><span>VoiceCraft Fast TTS</span><a href="privacy.html">Privacy</a></footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="app.js"></script>
+  <script src="app.js?v=2.0.1" defer></script>
 </body>
 </html>
