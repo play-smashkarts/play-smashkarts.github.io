@@ -1,0 +1,13 @@
+{
+  "name": "VoiceCraft 3D Text to Speech",
+  "short_name": "VoiceCraft",
+  "description": "Browser text-to-speech playback and natural MP3 generation in a responsive 3D interface.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#070b16",
+  "theme_color": "#0b1020",
+  "icons": [
+    {"src":"assets/icons/icon48.png","sizes":"48x48","type":"image/png"},
+    {"src":"assets/icons/icon128.png","sizes":"128x128","type":"image/png"}
+  ]
+}

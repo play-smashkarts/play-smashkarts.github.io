@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="index,follow"><title>Privacy — VoiceCraft</title>
+  <link rel="icon" href="assets/icons/icon32.png"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header shell"><a class="brand" href="index.html"><span class="brand-icon-wrap"><img src="assets/icons/icon48.png" alt="" width="34" height="34"></span><span>VoiceCraft</span></a><a class="button ghost" href="index.html">Back to tool</a></header>
+  <main class="shell" style="max-width:850px;padding:60px 0 100px">
+    <span class="eyebrow">Privacy</span><h1 style="font-size:clamp(2.4rem,6vw,4.5rem);letter-spacing:-.05em;line-height:1;margin:12px 0 24px">Privacy policy</h1>
+    <div class="panel" style="display:grid;gap:20px">
+      <section><h2>Browser playback</h2><p style="color:var(--muted)">VoiceCraft uses the browser Web Speech API for live playback. The website itself does not upload your text for this local/browser playback mode. Some browser-reported voices can be provided by the operating system or a browser/cloud provider, so their processing behavior is controlled by that provider.</p></section>
+      <section><h2>MP3 generation</h2><p style="color:var(--muted)">Downloadable MP3 audio is generated using the external SpeechSter API hosted at ahm7xmakki.com. When you choose to generate an MP3, the text in the editor, selected voice identifier, speed and pitch settings are sent to that provider so it can return audio/mpeg data. VoiceCraft asks for consent before the first MP3 request.</p></section>
+      <section><h2>Local storage</h2><p style="color:var(--muted)">Theme, voice choices, speed, pitch, volume and optional consent preference can be stored in your browser using localStorage. The website does not require an account.</p></section>
+      <section><h2>Imported files</h2><p style="color:var(--muted)">TXT and Markdown files are read locally in the browser. The source file is not uploaded as a file. Its text is only sent externally if you explicitly generate an MP3.</p></section>
+      <section><h2>Hosting</h2><p style="color:var(--muted)">If you publish this project on GitHub Pages or another host, that hosting provider may maintain standard server/CDN logs according to its own privacy policy.</p></section>
+      <section><h2>Third-party terms</h2><p style="color:var(--muted)">The external TTS provider is a separate service. Review its current privacy policy and terms before production use, and update this page if you change providers.</p></section>
+    </div>
+  </main>
+</body>
+</html>
